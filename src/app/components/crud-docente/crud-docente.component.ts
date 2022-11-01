@@ -3,6 +3,7 @@ import { Docente } from 'src/app/models/docente.model';
 import { Ubigeo } from 'src/app/models/ubigeo.model';
 import { DocenteService } from 'src/app/services/docente.service';
 import { UbigeoService } from 'src/app/services/ubigeo.service';
+import Swal from 'sweetalert2'
 
 @Component({
   selector: 'app-crud-docente',
@@ -56,7 +57,32 @@ export class CrudDocenteComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  consulta(){
+     console.log(">>> consulta >> " + this.filtro);
+      this.docenteService.consultaDocente(this.filtro==""?"todos":this.filtro).subscribe(
+          x => this.docentes = x
+      )
+  }
 
+  registra(){
+    console.log(">>> registra >> ");
+    this.docenteService.registraDocente(this.docente).subscribe(
+        x => Swal.fire('Mensaje', x.mensaje,'info')
+    )
+  }
+
+  busca(obj: Docente){
+      console.log(">>> busca >> " + obj.idDocente);
+      this.docente = obj;
+      
+      this.ubigeoService.listaProvincias(this.docente.ubigeo?.departamento).subscribe(
+        response =>  this.provincias= response
+      );
+
+      this.ubigeoService.listaDistritos(this.docente.ubigeo?.departamento, this.docente.ubigeo?.provincia).subscribe(
+        response =>  this.distritos= response
+       );
+  }
 
 
 }

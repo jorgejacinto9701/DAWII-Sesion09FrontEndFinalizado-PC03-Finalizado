@@ -10,7 +10,7 @@
                 <input [(ngModel)] = "filtro"  class="form-control"  id="id_txt_filtro" name="filtro" placeholder="Ingrese el nombre" type="text" maxlength="30" />
             </div>
             <div class="col-md-2">
-                <button type="button" class="btn btn-primary" id="id_btn_filtrar" style="width: 150px">Filtrar</button>
+                <button type="button" (click)="consulta()" class="btn btn-primary" id="id_btn_filtrar" style="width: 150px">Filtrar</button>
             </div>
             <div class="col-md-2">
                 <button  type="button" data-toggle='modal' data-target="#idModalRegistrar" class='btn btn-success' style="width: 150px">Registrar</button>
@@ -35,15 +35,14 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td>AA</td>
-                                <td>AA</td>
-                                <td>AA</td>
-                                <td>AA</td>
-                                <td>AA</td>
+                            <tr *ngFor="let x of docentes">
+                                <td>{{x.idDocente}}</td>
+                                <td>{{x.nombre}}</td>
+                                <td>{{x.dni}}</td>
+                                <td>{{x.estado==1?"Activo":"Inactivo"}}</td>
+                                <td>{{x.ubigeo!.departamento}} - {{x.ubigeo!.provincia}}- {{x.ubigeo!.distrito}}</td>
                                 <td><button type="button" style="width: 90px" class="btn btn-primary btn-sm" data-toggle='modal' data-target="#exampleModalEliminar">Activo</button></td>
-                                <td><button type="button" style="width: 90px" class="btn btn-primary btn-sm"  data-toggle="modal" data-target="#idModalActualizar">Editar</button></td>
-                                
+                                <td><button type="button" (click)="busca(x)" style="width: 90px" class="btn btn-primary btn-sm"  data-toggle="modal" data-target="#idModalActualizar">Editar</button></td>
                             </tr>
                         </tbody>
                     </table>
@@ -73,12 +72,12 @@
                                 <div  class="row">
                                     <div class="col-lg-10">
                                         <label for="id_reg_nombre">Nombre</label>
-                                        <input [(ngModel)]="docente.nombre" type="text" placeholder="Ingrese el nombre" class="form-control" name="nombre" id="id_reg_nombre" />
+                                        <input type="text"  [(ngModel)]="docente.nombre" placeholder="Ingrese el nombre" class="form-control" name="nombre" id="id_reg_nombre" />
                                     </div>
                                     
                                     <div class="col-lg-2">
                                         <label for="id_reg_dni">DNI</label>
-                                        <input  [(ngModel)]="docente.dni" t type="text" placeholder="Ingrese DNI" class="form-control" name="dni" id="id_reg_dni"  maxlength="8"/>
+                                        <input  [(ngModel)]="docente.dni" type="text" placeholder="Ingrese DNI" class="form-control" name="dni" id="id_reg_dni"  maxlength="8"/>
                                     </div>
                                 </div>
 
@@ -107,7 +106,7 @@
 
                                     <div class="col-lg-4">
                                         <label for="id_reg_distrito">Distrito</label>
-                                        <select [(ngModel)]="docente.ubigeo!.distrito"  id="id_reg_distrito" name="distrito" class="form-control">
+                                        <select [(ngModel)]="docente.ubigeo!.idUbigeo"  id="id_reg_distrito" name="distrito" class="form-control">
                                             <option value="-1"> [Seleccione] </option>
                                             <option *ngFor="let aux of  distritos" value="{{ aux.idUbigeo }}"> 
                                                 {{ aux.distrito }}
@@ -124,7 +123,7 @@
                             <button type="button" class="btn btn-secondary" data-dismiss="modal" id="btn_reg_cerrar" style="width: 100px;">Close</button>
                             <div class="form-group text-center">
                                 <div class="col-lg-12">
-                                    <button id="id_reg_registra"  class="btn btn-success form-control"style="width: 100px;">Registrar</button>
+                                    <button id="id_reg_registra"  (click)="registra()" class="btn btn-success form-control"style="width: 100px;">Registrar</button>
                                 </div>
                             </div>
                         </div>
@@ -156,12 +155,12 @@
                             <div  class="row">
                                 <div class="col-lg-8">
                                     <label for="id_act_nombre">Nombre</label>
-                                    <input type="text" placeholder="Ingrese el nombre" class="form-control" name="nombre" id="id_act_nombre" />
+                                    <input type="text" [(ngModel)]="docente.nombre" placeholder="Ingrese el nombre" class="form-control" name="nombre" id="id_act_nombre" />
                                 </div>
     
                                 <div class="col-lg-2">
                                     <label for="id_act_estado">Estado</label>
-                                    <select id="id_act_estado" name="estado" class="form-control">
+                                    <select id="id_act_estado" [(ngModel)]="docente.estado"  name="estado" class="form-control">
                                         <option value="-1"> [Seleccione] </option>
                                         <option value="1"> Activo </option>
                                         <option value="0"> Inactivo </option>
@@ -170,7 +169,7 @@
 
                                 <div class="col-lg-2">
                                     <label for="id_act_dni">DNI</label>
-                                    <input type="text" placeholder="Ingrese DNI" class="form-control" name="dni" id="id_act_dni"  maxlength="8"/>
+                                    <input type="text" [(ngModel)]="docente.dni"  placeholder="Ingrese DNI" class="form-control" name="dni" id="id_act_dni"  maxlength="8"/>
                                 </div>
                             </div>
     
