@@ -10,7 +10,7 @@
                 <input [(ngModel)] = "filtro"  class="form-control"  id="id_txt_filtro" name="filtro" placeholder="Ingrese el nombre" type="text" maxlength="30" />
             </div>
             <div class="col-md-2">
-                <button type="button" (click)="consulta()" class="btn btn-primary" id="id_btn_filtrar" style="width: 150px">Filtrar</button>
+                <button type="button" class="btn btn-primary" id="id_btn_filtrar" style="width: 150px">Filtrar</button>
             </div>
             <div class="col-md-2">
                 <button  type="button" data-toggle='modal' data-target="#idModalRegistrar" class='btn btn-success' style="width: 150px">Registrar</button>
@@ -35,14 +35,14 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr *ngFor="let x of docentes">
-                                <td>{{x.idDocente}}</td>
-                                <td>{{x.nombre}}</td>
-                                <td>{{x.dni}}</td>
-                                <td>{{x.estado==1?"Activo":"Inactivo"}}</td>
-                                <td>{{x.ubigeo!.departamento}} - {{x.ubigeo!.provincia}}- {{x.ubigeo!.distrito}}</td>
+                            <tr>
+                                <td>AA</td>
+                                <td>AA</td>
+                                <td>AA</td>
+                                <td>AA</td>
+                                <td>AA</td>
                                 <td><button type="button" style="width: 90px" class="btn btn-primary btn-sm" data-toggle='modal' data-target="#exampleModalEliminar">Activo</button></td>
-                                <td><button type="button" (click)="busca(x)" style="width: 90px" class="btn btn-primary btn-sm"  data-toggle="modal" data-target="#idModalActualizar">Editar</button></td>
+                                <td><button type="button" style="width: 90px" class="btn btn-primary btn-sm"  data-toggle="modal" data-target="#idModalActualizar">Editar</button></td>
                             </tr>
                         </tbody>
                     </table>
@@ -123,7 +123,7 @@
                             <button type="button" class="btn btn-secondary" data-dismiss="modal" id="btn_reg_cerrar" style="width: 100px;">Close</button>
                             <div class="form-group text-center">
                                 <div class="col-lg-12">
-                                    <button id="id_reg_registra"  (click)="registra()" class="btn btn-success form-control"style="width: 100px;">Registrar</button>
+                                    <button id="id_reg_registra"   class="btn btn-success form-control"style="width: 100px;">Registrar</button>
                                 </div>
                             </div>
                         </div>
