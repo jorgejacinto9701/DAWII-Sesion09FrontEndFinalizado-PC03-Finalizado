@@ -1,0 +1,232 @@
+
+<div class="container" >
+    <h5>Crud de Docente</h5>
+
+    <div class="col-md-23" style="margin-top: 3%">
+
+
+        <div class="row" style="height: 80px">
+            <div class="col-md-4">
+                <input [(ngModel)] = "filtro"  class="form-control"  id="id_txt_filtro" name="filtro" placeholder="Ingrese el nombre" type="text" maxlength="30" />
+            </div>
+            <div class="col-md-2">
+                <button type="button" class="btn btn-primary" id="id_btn_filtrar" style="width: 150px">Filtrar</button>
+            </div>
+            <div class="col-md-2">
+                <button  type="button" data-toggle='modal' data-target="#idModalRegistrar" class='btn btn-success' style="width: 150px">Registrar</button>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <div class="content">
+
+                    <table id="id_table" class="table table-striped table-bordered">
+                        <thead>
+                            <tr>
+                                <th style="width: 5%">#</th>
+                                <th style="width: 30%">Nombre</th>
+                                <th style="width: 10%">DNI</th>
+                                <th style="width: 10%">Estado</th>
+                                <th style="width: 31%">Ubigeo</th>
+                                <th style="width: 7%"></th>
+                                <th style="width: 7%"></th>
+
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>AA</td>
+                                <td>AA</td>
+                                <td>AA</td>
+                                <td>AA</td>
+                                <td>AA</td>
+                                <td><button type="button" style="width: 90px" class="btn btn-primary btn-sm" data-toggle='modal' data-target="#exampleModalEliminar">Activo</button></td>
+                                <td><button type="button" style="width: 90px" class="btn btn-primary btn-sm"  data-toggle="modal" data-target="#idModalActualizar">Editar</button></td>
+                                
+                            </tr>
+                        </tbody>
+                    </table>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="modal fade"  id="idModalRegistrar" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+
+        <div class="modal-dialog" style="max-width: 70%;">
+            <div class="modal-content" >
+
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Registro de Docente</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                
+                <div class="modal-body">
+                    <form class="content" >
+                        <div class="submit-form">
+                            
+                                <div  class="row">
+                                    <div class="col-lg-10">
+                                        <label for="id_reg_nombre">Nombre</label>
+                                        <input [(ngModel)]="docente.nombre" type="text" placeholder="Ingrese el nombre" class="form-control" name="nombre" id="id_reg_nombre" />
+                                    </div>
+                                    
+                                    <div class="col-lg-2">
+                                        <label for="id_reg_dni">DNI</label>
+                                        <input  [(ngModel)]="docente.dni" t type="text" placeholder="Ingrese DNI" class="form-control" name="dni" id="id_reg_dni"  maxlength="8"/>
+                                    </div>
+                                </div>
+
+
+                                <div class="row" style="margin-top: 5%">
+                                    
+                                    <div class="col-lg-4">
+                                        <label for="id_reg_departamento">Departamento</label>
+                                        <select [(ngModel)]="docente.ubigeo!.departamento" (change)="cargaProvincia()"   id="id_reg_departamento" name="departamento" class="form-control">
+                                            <option value="-1"> [Seleccione] </option>
+                                            <option *ngFor="let aux of departamentos" value="{{ aux }}"> 
+                                                        {{ aux }}
+                                            </option>
+                                        </select>
+                                    </div>
+
+                                    <div class="col-lg-4">
+                                        <label  for="id_reg_provincia">Provincia</label>
+                                        <select  [(ngModel)]="docente.ubigeo!.provincia" (change)="cargaDistrito()"   id="id_reg_provincia" name="provincia" class="form-control" >
+                                            <option value="-1"> [Seleccione] </option>
+                                             <option *ngFor="let aux of  provincias" value="{{ aux }}"> 
+                                                        {{ aux }}
+                                             </option>
+                                        </select>
+                                    </div>
+
+                                    <div class="col-lg-4">
+                                        <label for="id_reg_distrito">Distrito</label>
+                                        <select [(ngModel)]="docente.ubigeo!.distrito"  id="id_reg_distrito" name="distrito" class="form-control">
+                                            <option value="-1"> [Seleccione] </option>
+                                            <option *ngFor="let aux of  distritos" value="{{ aux.idUbigeo }}"> 
+                                                {{ aux.distrito }}
+                                             </option>
+                                        </select>
+                                    </div>
+                                
+                                
+                                
+                                </div>
+
+                        </div> 
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal" id="btn_reg_cerrar" style="width: 100px;">Close</button>
+                            <div class="form-group text-center">
+                                <div class="col-lg-12">
+                                    <button id="id_reg_registra"  class="btn btn-success form-control"style="width: 100px;">Registrar</button>
+                                </div>
+                            </div>
+                        </div>
+
+               
+                    </form>
+                </div>
+
+
+
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="idModalActualizar" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" style="max-width: 80%;">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Actualización de docente</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                         <span aria-hidden="true">&times;</span>
+                     </button>
+                </div>
+                <div class="modal-body">
+
+                    <form class="content" >
+                        <div class="submit-form">
+
+                            <div  class="row">
+                                <div class="col-lg-8">
+                                    <label for="id_act_nombre">Nombre</label>
+                                    <input type="text" placeholder="Ingrese el nombre" class="form-control" name="nombre" id="id_act_nombre" />
+                                </div>
+    
+                                <div class="col-lg-2">
+                                    <label for="id_act_estado">Estado</label>
+                                    <select id="id_act_estado" name="estado" class="form-control">
+                                        <option value="-1"> [Seleccione] </option>
+                                        <option value="1"> Activo </option>
+                                        <option value="0"> Inactivo </option>
+                                    </select>
+                                </div>
+
+                                <div class="col-lg-2">
+                                    <label for="id_act_dni">DNI</label>
+                                    <input type="text" placeholder="Ingrese DNI" class="form-control" name="dni" id="id_act_dni"  maxlength="8"/>
+                                </div>
+                            </div>
+    
+    
+                            <div class="row" style="margin-top: 5%">
+                                <div class="col-lg-4">
+                                    <label for="id_act_departamento">Departamento</label>
+                                    <select [(ngModel)] = "docente.ubigeo!.departamento" (change)= "cargaProvincia()"  id="id_act_departamento" name="departamento" class="form-control">
+                                        <option value="-1"> [Seleccione] </option>
+                                        <option *ngFor="let aux of departamentos" value="{{ aux }}">
+                                            {{ aux }}
+                                        </option> 
+                                    </select>
+                                </div>
+    
+                                <div class="col-lg-4">
+                                    <label for="id_act_provincia">Provincia</label>
+                                    <select [(ngModel)] = "docente.ubigeo!.provincia" (change)= "cargaDistrito()"  id="id_act_provincia" name="provincia" class="form-control" >
+                                        <option value="-1"> [Seleccione] </option>
+                                        <option *ngFor="let aux of provincias" value="{{ aux }}">
+                                            {{ aux }}
+                                        </option>   
+                                    </select>
+                                </div>
+    
+                                <div class="col-lg-4">
+                                    <label for="id_act_distrito">Distrito</label>
+                                    <select [(ngModel)] = "docente.ubigeo!.idUbigeo" id="id_act_distrito" name="distrito" class="form-control">
+                                        <option value="-1"> [Seleccione] </option>
+                                        <option *ngFor="let aux of distritos"    value="{{ aux.idUbigeo }}">
+                                            {{ aux.distrito }}
+                                        </option> 
+                                    </select>
+                                </div>
+                            </div> 
+
+
+
+                        </div>
+
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal" id="btn_act_cerrar">Close</button>
+                            <div class="form-group text-center">
+                                <div class="col-lg-12">
+                                    <button id="id_act_actualiza" class="btn btn-success form-control">Actualizar</button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+
+
+
+
+
+                </div>
+
+            </div>
+        </div>
+    </div>
