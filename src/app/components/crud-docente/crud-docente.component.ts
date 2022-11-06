@@ -29,7 +29,7 @@ export class CrudDocenteComponent implements OnInit {
     dni:"",
     estado:1,
     ubigeo:{
-      idUbigeo: 0,
+      idUbigeo: -1,
       departamento:"-1",
       provincia:"-1",
       distrito:"-1",
@@ -46,18 +46,78 @@ export class CrudDocenteComponent implements OnInit {
       this.ubigeoService.listaProvincias(this.docente.ubigeo?.departamento).subscribe(
         response =>  this.provincias= response
       );
+
+      this.distritos = [];
+      this.docente.ubigeo!.idUbigeo = -1;
+      this.docente.ubigeo!.provincia = "-1";
   }
 
   cargaDistrito(){
-    this.ubigeoService.listaDistritos(this.docente.ubigeo?.departamento, this.docente.ubigeo?.provincia).subscribe(
-      response =>  this.distritos= response
-     );
+          this.ubigeoService.listaDistritos(this.docente.ubigeo?.departamento, this.docente.ubigeo?.provincia).subscribe(
+            response =>  this.distritos= response
+          );
+          
+          this.docente.ubigeo!.idUbigeo = -1;
    }
 
   ngOnInit(): void {
   }
 
+  consulta(){
+        this.docenteService.consultaPorNombre(this.filtro==""?"todos":this.filtro).subscribe(
+              x => this.docentes = x
+        );
+  }
+
+  registra(){
+        this.docenteService.inserta(this.docente).subscribe(
+             x => Swal.fire('Mensaje', x.mensaje,'info') 
+        );
+  }
+
+  actualizaEstado(obj:Docente){
+      obj.estado = obj.estado == 1? 0 : 1;  
+      this.docenteService.actualiza(obj).subscribe();
+  }
+
+  busca(obj:Docente){
+      this.docente = obj;
+
+      this.ubigeoService.listaProvincias(this.docente.ubigeo?.departamento).subscribe(
+        response =>  this.provincias= response
+      );
+
+      this.ubigeoService.listaDistritos(this.docente.ubigeo?.departamento, this.docente.ubigeo?.provincia).subscribe(
+        response =>  this.distritos= response
+      );
+  }
+
+  actualiza(){
+      this.docenteService.actualiza(this.docente).subscribe(
+            x => Swal.fire('Mensaje', x.mensaje,'info') 
+      );
+  }
 
 
+  elimina(obj:Docente){
+          Swal.fire({
+            title: '¿Desea eliminar?',
+            text: "Los cambios no se van a revertir",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Sí, elimina.',
+            cancelButtonText: 'No, cancelar'
+          }).then((result) => {
+              if (result.isConfirmed) {
+                
+                this.docenteService.elimina(obj.idDocente || 0).subscribe(
+                    x  =>   Swal.fire('Mensaje',x.mensaje,'success')
+                );
+                
+              }
+          })
+  }
 
 }
