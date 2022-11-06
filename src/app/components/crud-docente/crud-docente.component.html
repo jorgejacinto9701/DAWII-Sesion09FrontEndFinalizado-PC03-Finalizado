@@ -10,10 +10,10 @@
                 <input [(ngModel)] = "filtro"  class="form-control"  id="id_txt_filtro" name="filtro" placeholder="Ingrese el nombre" type="text" maxlength="30" />
             </div>
             <div class="col-md-2">
-                <button type="button" class="btn btn-primary" id="id_btn_filtrar" style="width: 150px">Filtrar</button>
+                <button type="button" class="btn btn-primary btn-sm" id="id_btn_filtrar" style="width: 150px">Filtrar</button>
             </div>
             <div class="col-md-2">
-                <button  type="button" data-toggle='modal' data-target="#idModalRegistrar" class='btn btn-success' style="width: 150px">Registrar</button>
+                <button  type="button" data-toggle='modal' data-target="#idModalRegistrar" class='btn btn-primary btn-sm' style="width: 150px">Registrar</button>
             </div>
         </div>
 
@@ -41,8 +41,9 @@
                                 <td>AA</td>
                                 <td>AA</td>
                                 <td>AA</td>
-                                <td><button type="button" style="width: 90px" class="btn btn-primary btn-sm" data-toggle='modal' data-target="#exampleModalEliminar">Activo</button></td>
-                                <td><button type="button" style="width: 90px" class="btn btn-primary btn-sm"  data-toggle="modal" data-target="#idModalActualizar">Editar</button></td>
+                                <td><button type="button" style="width: 90px" class="btn btn-success btn-sm" data-toggle='modal' data-target="#exampleModalEliminar">Activo</button></td>
+                                <td><button type="button" style="width: 90px" class="btn btn-success btn-sm"  data-toggle="modal" data-target="#idModalActualizar">Editar</button></td>
+                                <td><button type="button" style="width: 90px" class="btn btn-danger btn-sm"  data-toggle="modal" data-target="#idModalActualizar">Eliminar</button></td>
                             </tr>
                         </tbody>
                     </table>
