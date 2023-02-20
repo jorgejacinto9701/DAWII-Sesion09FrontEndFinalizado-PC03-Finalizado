@@ -102,6 +102,7 @@ formsActualiza = new FormGroup({
 
         this.docenteService.inserta(this.docente).subscribe(
              x => { 
+                    document.getElementById("btn_reg_limpiar")?.click();
                     document.getElementById("btn_reg_cerrar")?.click();
                     Swal.fire('Mensaje', x.mensaje,'info'); 
                     this.docenteService.consultaPorNombre(this.filtro==""?"todos":this.filtro).subscribe(
